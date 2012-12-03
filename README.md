@@ -12,3 +12,9 @@ var filteredResults = f.select(['text', 'from_user'])
 						.order('from_user')
 						.done();
 ```
+
+##featured expect types:
+- =
+- &lt; 
+- &gt;
+- match
