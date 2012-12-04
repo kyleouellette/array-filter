@@ -83,6 +83,11 @@
 		return this;
 	};
 
+	Filter.prototype.resetTo = function(index) {
+		this.updateJSON(this.json[index]);
+		return this;
+	};
+
 	Filter.prototype.orderBy = Filter.order;
 
 	Filter.prototype.limit = function(num) {

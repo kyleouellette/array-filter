@@ -16,6 +16,8 @@ $.getJSON('http://search.twitter.com/search.json?q=' + encodeURIComponent('#kitt
 					field: 'text'})
 				.order('from_user')
 				.done();
+	f.resetTo(0);
+	console.log(f.json);
 
 	// append results to the body
 	for(var i = 0; i < filteredResults.length; i++){
