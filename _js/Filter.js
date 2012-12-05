@@ -1,7 +1,12 @@
-(function(win, $, undefined){
 
-	"use strict";
 
+	/**
+	 * Creates a new Filter
+	 * 
+	 * @class  Filter
+	 * @constructor
+	 * @param {array} json Should be an array containing objects
+	 */
 	function Filter(json){
 		if(this === window){
 			return new Filter(json);
@@ -14,12 +19,26 @@
 		return this;
 	}
 
+	/**
+	 * Private method for updating the current array of objects. This method is what allows for a history and backtracking
+	 * @method  updateJSON
+	 * @param  {array} json Feed to keep in history
+	 * @private
+	 * @return {object}      returns instance of Filter
+	 */
 	Filter.prototype.updateJSON = function(json) {
 		this.json.push(json);
 		this.currentJSON++;
 		return this;
 	};
 
+	/**
+	 * What object properties to keep in the feed of objects
+	 * @method  select
+	 * @param  {object} what is a string or an array to filter through each object and remove undesired attributes or properties
+	 * @private
+	 * @return {object}      returns instance of Filter
+	 */
 	Filter.prototype.select = function(what) {
 		var ret = [],
 			tmp = {},
@@ -41,6 +60,13 @@
 		return this;
 	};
 
+	/**
+	 * object containing constraints to check against
+	 * @method  expect
+	 * @param  {object} obj object containing properties that will form the test
+	 * @private
+	 * @return {object}     returns instance of Filter
+	 */
 	Filter.prototype.expect = function(obj) {
 		var json = this.json[this.currentJSON],
 			type,
@@ -72,6 +98,13 @@
 		return this;
 	};
 
+	/**
+	 * Changes array order based on objects properties
+	 * @method  order
+	 * @param  {string} by order the array of objects based on the property passed as "by"
+	 * @private
+	 * @return {object}    returns instance of Filter
+	 */
 	Filter.prototype.order = function(by) {
 		var json = this.json[this.currentJSON];
 		
@@ -83,6 +116,13 @@
 		return this;
 	};
 
+	/**
+	 * reset the current feed to a state earlier in the filtering process
+	 * @method  resetTo
+	 * @param  {int} index number to backtrack to
+	 * @private
+	 * @return {object}       return instance of Filter
+	 */
 	Filter.prototype.resetTo = function(index) {
 		this.updateJSON(this.json[index]);
 		return this;
@@ -122,10 +162,12 @@
 		return reg.test(val);
 	};
 
+	/**
+	 * done indicates that the filtering is complete
+	 * @method  done
+	 * @private
+	 * @return {array} returns filtered dataset
+	 */
 	Filter.prototype.done = function() {
 		return this.json[this.currentJSON];
 	};
-
-	win.Filter = Filter;
-
-})(window, jQuery);
