@@ -1,6 +1,7 @@
 
 
 	/**
+	 * @chainable
 	 * Creates a new Filter
 	 * 
 	 * @class  Filter
@@ -20,6 +21,7 @@
 	}
 
 	/**
+	 * @chainable
 	 * Private method for updating the current array of objects. This method is what allows for a history and backtracking
 	 * @method  updateJSON
 	 * @param  {array} json Feed to keep in history
@@ -33,10 +35,10 @@
 	};
 
 	/**
+	 * @chainable
 	 * What object properties to keep in the feed of objects
 	 * @method  select
 	 * @param  {object} what is a string or an array to filter through each object and remove undesired attributes or properties
-	 * @private
 	 * @return {object}      returns instance of Filter
 	 */
 	Filter.prototype.select = function(what) {
@@ -61,10 +63,10 @@
 	};
 
 	/**
+	 * @chainable
 	 * object containing constraints to check against
 	 * @method  expect
-	 * @param  {object} obj object containing properties that will form the test
-	 * @private
+	 * @param  {object} obj object containing properties that will form the test. Properties on this object should be type, val, and field. values for type can be one of the following: <, >, =, match
 	 * @return {object}     returns instance of Filter
 	 */
 	Filter.prototype.expect = function(obj) {
@@ -99,10 +101,10 @@
 	};
 
 	/**
+	 * @chainable
 	 * Changes array order based on objects properties
 	 * @method  order
 	 * @param  {string} by order the array of objects based on the property passed as "by"
-	 * @private
 	 * @return {object}    returns instance of Filter
 	 */
 	Filter.prototype.order = function(by) {
@@ -117,10 +119,10 @@
 	};
 
 	/**
+	 * @chainable
 	 * reset the current feed to a state earlier in the filtering process
 	 * @method  resetTo
 	 * @param  {int} index number to backtrack to
-	 * @private
 	 * @return {object}       return instance of Filter
 	 */
 	Filter.prototype.resetTo = function(index) {
@@ -128,8 +130,22 @@
 		return this;
 	};
 
+	/**
+	 * @chainable
+	 * alias for order
+	 * @method orderBy
+	 * @param {string} key to order objects by
+	 * @return {object} returns instance of Filter
+	 */
 	Filter.prototype.orderBy = Filter.order;
 
+	/**
+	 * limit the number of responses
+	 * @method  limit
+	 * @param  {int} num number of results to return from the dataset
+	 * @return {object}     returns instance of Filter
+	 * @chainable
+	 */
 	Filter.prototype.limit = function(num) {
 		var json = this.json[this.currentJSON];
 		json = json.slice(0, num);
@@ -163,9 +179,9 @@
 	};
 
 	/**
-	 * done indicates that the filtering is complete
+	 * @chainable
+ 	 * done indicates that the filtering is complete 
 	 * @method  done
-	 * @private
 	 * @return {array} returns filtered dataset
 	 */
 	Filter.prototype.done = function() {
